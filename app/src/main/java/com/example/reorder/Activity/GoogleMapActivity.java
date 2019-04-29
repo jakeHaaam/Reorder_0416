@@ -154,7 +154,7 @@ public class GoogleMapActivity extends FragmentActivity implements
             st_lat=Double.parseDouble(CurrentStoreInfo.getStore().getStoreInfoList().get(i).getStore_lat());
             st_lng=Double.parseDouble(CurrentStoreInfo.getStore().getStoreInfoList().get(i).getStore_lng());
             LatLng stPoint=new LatLng(st_lat,st_lng);
-            map.addMarker(new MarkerOptions().position(stPoint).title(CurrentStoreInfo.getStore().getStoreInfoList().get(i).getStore_name()));
+            map.addMarker(new MarkerOptions().position(stPoint).title(CurrentStoreInfo.getStore().getStoreInfoList().get(i).getStore_name()).snippet(CurrentStoreInfo.getStore().getStoreInfoList().get(i).getStore_category())).showInfoWindow();
         }
 
         map.setOnMarkerClickListener(this);
@@ -333,7 +333,7 @@ public class GoogleMapActivity extends FragmentActivity implements
     @Override
     public boolean onMarkerClick(Marker marker) {
         //마커 클릭시 구현
-
+        Toast.makeText(getApplicationContext(),marker.getTitle()+"클릭",Toast.LENGTH_SHORT).show();
         return true;
     }
 }

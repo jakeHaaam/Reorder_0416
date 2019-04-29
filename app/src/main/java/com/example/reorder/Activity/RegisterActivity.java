@@ -1,5 +1,6 @@
 package com.example.reorder.Activity;
 
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import com.example.reorder.Result.JoinResult;
 import com.example.reorder.R;
 import com.example.reorder.api.IdCheckApi;
 import com.example.reorder.api.JoinApi;
+import com.example.reorder.globalVariables.serverURL;
 
 import java.util.HashMap;
 
@@ -29,7 +31,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText et_sign_up_id;
     EditText et_sign_up_password;
     EditText et_sign_up_password_check;
-
+    String url= serverURL.getUrl();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,16 +55,13 @@ public class RegisterActivity extends AppCompatActivity {
                 if(et_sign_up_id.getText().toString().equals(""))
                 {
                     Toast.makeText(getApplicationContext(),"ID를 입력해 주세요.",Toast.LENGTH_SHORT).show();
-                    //bt_sign_up_ok.setClickable(false);
-                    //bt_sign_up_ok.setTextColor(Color.GRAY);
-                    Log.d("12321",client_id+"1");
+                    bt_sign_up_ok.setClickable(false);
                 }
 
                 else
                     try {
-                        Log.d("12321",client_id+"2");
                         Retrofit retrofit = new Retrofit.Builder()
-                                .baseUrl("http://35.197.38.155:4000")
+                                .baseUrl(url)
                                 .addConverterFactory(GsonConverterFactory.create())
                                 .build();
 
@@ -77,9 +76,13 @@ public class RegisterActivity extends AppCompatActivity {
                                     switch (idCheckResult.getResult()) {
                                         case 0:
                                             Toast.makeText(getApplicationContext(), "이미 가입된 ID입니다.", Toast.LENGTH_SHORT).show();
+                                            bt_sign_up_ok.setClickable(false);
+                                            bt_sign_up_ok.setTextColor(Color.GRAY);
                                             break;
                                         case 1:
                                             Toast.makeText(getApplicationContext(), "사용 가능한 ID입니다.", Toast.LENGTH_SHORT).show();
+                                            bt_sign_up_ok.setClickable(true);
+                                            bt_sign_up_ok.setTextColor(Color.WHITE);
                                             break;
                                         default:
                                             Toast.makeText(getApplicationContext(), "11111111 is NOT Successful", Toast.LENGTH_SHORT).show();
@@ -100,8 +103,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-
-
         //비밀번호 체크
         bt_sign_up_ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
                         input.put("client_password2", et_sign_up_password_check.getText().toString());
 
 
-                        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://35.197.38.155/")
+                        Retrofit retrofit = new Retrofit.Builder().baseUrl(url)
                                 .addConverterFactory(GsonConverterFactory.create()).build();
 
                         JoinApi joinApi = retrofit.create(JoinApi.class);
@@ -131,12 +132,10 @@ public class RegisterActivity extends AppCompatActivity {
                             public void onResponse(Call<JoinResult> call, Response<JoinResult> response) {
                                 if (response.isSuccessful()) {
                                     JoinResult map = response.body();
-//                                Log.d("12321",response.headers().toString());
                                     if (map != null) {
                                         switch (map.getResult()) {
                                             case 1:
                                                 Toast.makeText(RegisterActivity.this, "회원 가입이 되었습니다~!", Toast.LENGTH_SHORT).show();
-//                                            Log.d("12321","ok");
                                                 finish();
                                                 break;
                                             case 0:

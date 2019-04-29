@@ -36,8 +36,6 @@ public class BookMarkStoreAdapter extends RecyclerView.Adapter<BookMarkStoreAdap
         viewHolder.id.setText("id: " + Integer.toString(bookMarkStoreInfoList.get(i).getId()));
         viewHolder.st_id.setText("st_id: " + Integer.toString(bookMarkStoreInfoList.get(i).getStore_id()));
         viewHolder.st_name.setText("가게이름: " + bookMarkStoreInfoList.get(i).getStore_name());
-        viewHolder.st_lat.setText("경도: " + bookMarkStoreInfoList.get(i).getStore_lat());
-        viewHolder.st_lng.setText("위도: " + bookMarkStoreInfoList.get(i).getStore_lng());
         viewHolder.st_category.setText("카테고리: " + bookMarkStoreInfoList.get(i).getStore_category());
     }
 
@@ -56,8 +54,6 @@ public class BookMarkStoreAdapter extends RecyclerView.Adapter<BookMarkStoreAdap
             id=itemView.findViewById(R.id.tv_bm_id);
             st_id=itemView.findViewById(R.id.tv_bm_store_id);
             st_name=itemView.findViewById(R.id.tv_bm_store_name);
-            st_lat=itemView.findViewById(R.id.tv_bm_store_lat);
-            st_lng=itemView.findViewById(R.id.tv_bm_store_lng);
             st_category=itemView.findViewById(R.id.tv_bm_store_category);
         }
     }

@@ -1,6 +1,7 @@
 package com.example.reorder.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -20,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.reorder.R;
@@ -29,9 +31,7 @@ public class NavigationnActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Fragment homeFragment;
-    private Button bt_cart;
-
-
+    private ImageButton bt_cart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,13 +47,15 @@ public class NavigationnActivity extends AppCompatActivity
         transaction.addToBackStack(null);
         transaction.commit();
 
-       //layoutInflater layoutInflater =(LayoutInflater)this.getSystemService(LAYOUT_INFLATER_SERVICE);
-        //ViewGroup mainLayout=layoutInflater.inflate(R.layout.activity_navigationn);
-        //layoutInflater.inflate(R.layout.app_bar_navigationn,null,true);
-        //View view=layoutInflater.inflate(R.layout.app_bar_navigationn,null);
-        //Button bt_cart=(Button)view.findViewById(R.id.bt_cart);
+        bt_cart=findViewById(R.id.bt_cart);
 
-
+        bt_cart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent CartIntent=new Intent(getApplicationContext(),CarttActivity.class); //this 대신 getActivity() : 현재의 context받아올 수 있음
+                startActivity(CartIntent);
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
